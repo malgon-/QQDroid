@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+android:title="@string/settings">
+
+<PreferenceScreen
+android:title="@string/about">
+        <PreferenceCategory android:title="Developer">
+        <Preference android:title="Cleriot Simon" android:summary="alias Malgon"></Preference>
+        <Preference android:title="Website" android:summary="www.cleriotsimon.com"></Preference>
+        <Preference android:title="Email" android:summary="simon@cleriot.com"></Preference>
+        <Preference android:title="Twitter" android:summary="http://twitter.com/malgon"></Preference>
+        <Preference android:title="Linkedin" android:summary="http://www.linkedin.com/profile/view?id=89827319"></Preference>
+        </PreferenceCategory>
+        
+        <PreferenceCategory android:title="Designer">
+        <Preference android:title="Robin Gervot" android:summary="alias Rob1"></Preference>
+        <Preference android:title="Email" android:summary="robin.gervot@gmail.com"></Preference>
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="ActionBarSherlock (Licence Apache 2.0)" >
+        <Preference android:title="Jake Wharton" android:summary="http://actionbarsherlock.com/"></Preference>
+        </PreferenceCategory>
+
+        <PreferenceCategory android:title="Contributeurs">
+        <Preference android:title="Thomas Gerbet" android:summary=""></Preference>
+        </PreferenceCategory>
+</PreferenceScreen>
+
+
+<PreferenceCategory android:title="Application">
+	<EditTextPreference
+	            android:defaultValue="18"
+	            android:title="@string/policesize"
+	            android:key="policesize" />
+	            
+	<ListPreference
+                        android:title="Design"
+                        android:summary=""
+                        android:key="design"
+                        android:defaultValue="blackonwhite"
+                        android:entries="@array/designArray"
+                        android:entryValues="@array/designValues" />
+</PreferenceCategory>
+
+
+
+<PreferenceCategory android:title="@string/englishwebsite">
+
+<CheckBoxPreference android:title="FML" android:key="fml"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="true"
+ />
+
+<CheckBoxPreference android:title="Bash" android:key="bash"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="true"
+ />
+
+</PreferenceCategory>
+
+
+
+<PreferenceCategory android:title="@string/frenchwebsite">
+
+<CheckBoxPreference android:title="VDM" android:key="vdm"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="true"
+ />
+
+<CheckBoxPreference android:title="Dans Ton Chat" android:key="bashfr"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="true"
+ />
+
+<CheckBoxPreference android:title="ChuckNorrisFact" android:key="chuck"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="true"
+ />
+
+ <CheckBoxPreference android:title="WikiPourri" android:key="wikipourri"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="true"
+ />
+
+<CheckBoxPreference android:title="Fanboy Facts" android:key="fanboyfacts"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="false"
+ />
+
+ <CheckBoxPreference android:title="Perles De Profs" android:key="perlesdeprofs"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="false"
+ />
+
+<CheckBoxPreference android:title="PEBKAC" android:key="pebkac"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="false"
+ />
+
+ 
+<CheckBoxPreference android:title="Savoir Inutile" android:key="savinutile"
+android:summaryOn="@string/shownhome"
+android:summaryOff="@string/notshownhome"
+android:defaultValue="false"
+ />
+
+</PreferenceCategory>
+
+
+
+
+</PreferenceScreen>
+

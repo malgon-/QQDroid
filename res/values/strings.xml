@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <string name="app_name">Quote Quote Droid</string>
+<string name="about">A propos</string>
+<string name="settings">Préférences</string>
+<string name="share">Partager :</string>
+<string name="loading">Chargement</string>
+
+<string name="sharequote">Partager cette quote !</string>
+<string name="quotefrom">Citation de</string>
+<string name="error">Une erreur est survenue !</string>
+<string name="shownhome">Sera affiché sur la page d\'accueil</string>
+
+<string name="notshownhome">Ne sera pas affiché sur la page d\'accueil</string>
+<string name="frenchwebsite">Sites français</string>
+<string name="englishwebsite">English websites</string>
+
+<string name="nowebsite">Cliquez ici pour commencer à choisir des sites de citations!</string>
+<string name="policesize">Taille de police (pixels)</string>
+<string name="network_error">Réseau indisponible</string>
+<string name="retry">Réessayer</string>
+<string name="quit">Quitter</string>
+
+<string name="browse">Naviguer</string>
+
+<string name="previouspage">Page précédente</string>
+<string name="nextpage">Page suivante</string>
+
+<string name="help">Aide</string>
+
+<string name="takeatour">Découvrir</string>
+<string name="later">Plus tard</string>
+<!--<string name="welcome">Bienvenue dans QQDroid, retrouvez les dialogues les plus drôles du web!\nSi vous êtes nouveaux, choisissez "Découvrir" pour voir comment l\'application fonctionne (Indisponible dans la version bêta).</string>-->
+<string name="welcome">Bienvenue dans QQDroid 3! Une idée, un commentaire, des félicitations ? Je suis dispo à l\'adresse simon@cleriot.com\n\nSi vous vous posez des questions sur les permissions, lisez la description sur l\'Android Market!</string>
+
+<string-array name="designArray">
+        <item>Noir sur blanc</item>
+        <item>Blanc sur noir</item>
+    </string-array>
+<string-array name="designValues">
+        <item>blackonwhite</item>
+        <item>whiteonblack</item>
+    </string-array>
+    
+<string name="sharemenu">Partager l\'application</string>
+<string name="sharetext">Découvrez l\'application Android QQDroid, pour tablette et smartphone ! http://qqdroid.mobi/get </string>
+
+<string name="shownavcontrol">Afficher les contrôles de naviguation dans la barre du haut</string>
+
+<string name="didyouknowquote">Saviez-vous que vous pouvez faire glisser à gauche et à droite pour changer de page ? \nEt utilisez la touche menu pour obtenir les contrôle de naviguation!</string>
+
+</resources>

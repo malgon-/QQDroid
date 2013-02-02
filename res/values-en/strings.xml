@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<resources>
+    <string name="app_name">Quote Quote Droid</string>
+<string name="about">About</string>
+<string name="settings">Settings</string>
+<string name="share">Share :</string>
+<string name="loading">Loading</string>
+<string name="sharequote">Share this quote !</string>
+<string name="quotefrom">Quote from</string>
+<string name="error">An error has occurred</string>
+<string name="shownhome">Will be shown on home</string>
+<string name="notshownhome">Won\'t be shown on home</string>
+<string name="frenchwebsite">French websites</string>
+<string name="englishwebsite">English websites</string>
+<string name="nowebsite">Click here to start choosing quote websites</string>
+<string name="policesize">Police size (pixels)</string>
+<string name="network_error">Network error</string>
+<string name="retry">Retry</string>
+<string name="quit">Quit</string>
+<string name="previouspage">Previous page</string>
+<string name="nextpage">Next page</string>
+
+<string name="help">Help</string>
+<string name="takeatour">Take a tour</string>
+<string name="later">Later</string>
+<string name="welcome">Welcome on QQDroid 3.0! If you have any idea, bug report, congratulation, feel free to contact me on simon@cleriot.com!\n</string>
+
+<string-array name="designArray">
+        <item>White on black</item>
+    <item>Black on white</item>
+    </string-array>
+<string-array name="designValues">
+        <item>blackonwhite</item>
+        <item>whiteonblack</item>
+    </string-array>
+    
+<string name="browse">Browse</string>
+
+<string name="sharemenu">Share application</string>
+<string name="sharetext">Discover QQDroid Android application, available for tablet and smartphone! http://qqdroid.mobi/get </string>
+
+<string name="shownavcontrol">Show naviguation control on top bar</string>
+
+<string name="didyouknowquote">Did you know that you can swipe left and right to go next/previous page ?</string>
+</resources>

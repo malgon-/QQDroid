@@ -1,3 +1,5 @@
+#### Android
+
 # built application files
 *.apk
 *.ap_
@@ -18,3 +20,20 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+
+#### MAC OS X
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+*~
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
