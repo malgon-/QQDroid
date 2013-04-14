@@ -35,6 +35,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -53,10 +54,8 @@ import com.actionbarsherlock.app.ActionBar.OnNavigationListener;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
-import com.octo.android.robospice.persistence.DurationInMillis;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-import com.octo.android.robospice.request.simple.SimpleTextRequest;
+import com.cleriotsimon.webtools.WebRequest;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 /**
  * 
@@ -64,10 +63,8 @@ import com.octo.android.robospice.request.simple.SimpleTextRequest;
  * 
  */
 public class DisplayActivity extends BaseActivity {
+	private boolean firstHit = true;
 	private QuotesAdapter viewPagerAdapter;
-
-	private SimpleTextRequest infosRequest;
-	private SimpleTextRequest quotesRequest;
 
 	String url = "";
 	int minPage = 0;
@@ -88,10 +85,6 @@ public class DisplayActivity extends BaseActivity {
 		setContentView(R.layout.slider);
 
 		tag = getIntent().getExtras().getString("tag");
-
-		infosRequest = new SimpleTextRequest(
-				"http://qqdroid.mobi/api/infos.php?site=" + tag);
-		quotesRequest = new SimpleTextRequest("");
 
 		vp = (ViewPager) findViewById(R.id.vp);
 		vp.setOnPageChangeListener(new OnPageChangeListener() {
@@ -114,8 +107,9 @@ public class DisplayActivity extends BaseActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		setSupportProgressBarIndeterminateVisibility(Boolean.TRUE);
-		getSpiceManager().execute(infosRequest, "infos" + tag,
-				DurationInMillis.ONE_WEEK, new InfosRequestListener());
+
+		WebRequest.get("http://qqdroid.mobi/api/infos.php?site=" + tag,
+				WebRequest.ONE_WEEK, new InfosRequestListener());
 	}
 
 	@Override
@@ -144,16 +138,15 @@ public class DisplayActivity extends BaseActivity {
 		return false;
 	}
 
-	public class InfosRequestListener implements RequestListener<String> {
-
+	public class InfosRequestListener extends AsyncHttpResponseHandler {
 		@Override
-		public void onRequestFailure(SpiceException spiceException) {
+		public void onFailure(Throwable e, String response) {
 			Toast.makeText(DisplayActivity.this, "failure", Toast.LENGTH_SHORT)
 					.show();
 		}
 
 		@Override
-		public void onRequestSuccess(final String result) {
+		public void onSuccess(String result) {
 			JSONObject resp = null;
 			List<String> titles = null;
 			try {
@@ -186,9 +179,13 @@ public class DisplayActivity extends BaseActivity {
 				@Override
 				public boolean onNavigationItemSelected(int position,
 						long itemId) {
+					if (firstHit) {
+						firstHit = false;
+						return true;
+					}
 					menu = position;
 					vp.setAdapter(viewPagerAdapter);
-					setSupportProgressBarIndeterminateVisibility(Boolean.TRUE);
+					// setSupportProgressBarIndeterminateVisibility(Boolean.TRUE);
 					return true;
 				}
 			};
@@ -223,15 +220,19 @@ public class DisplayActivity extends BaseActivity {
 
 			ListView lv = (ListView) v.findViewById(R.id.list_quotes);
 
-			quotesRequest = new SimpleTextRequest(parseUrl(
-					url + menus[menu][1], position));
-			long time = DurationInMillis.ONE_HOUR;
-			if (menus[menu][2].equals("1"))
-				time = DurationInMillis.NEVER;
+			Log.d("QQDROID", parseUrl(url + menus[menu][1], position));
 
-			getSpiceManager().execute(quotesRequest,
-					tag + menus[menu][0] + position, time,
+			long time = WebRequest.ONE_HOUR;
+			if (menus[menu][2].equals("1"))
+				time = WebRequest.NEVER;
+
+			WebRequest.get(parseUrl(url + menus[menu][1], position), time,
 					new QuotesRequestListener(lv));
+
+			/*
+			 * getSpiceManager().execute(quotesRequest, tag + menus[menu][0] +
+			 * position, time, new QuotesRequestListener(lv));
+			 */
 			container.addView(v);
 			return v;
 		}
@@ -247,7 +248,7 @@ public class DisplayActivity extends BaseActivity {
 		}
 	}
 
-	public class QuotesRequestListener implements RequestListener<String> {
+	public class QuotesRequestListener extends AsyncHttpResponseHandler {
 		ListView lv;
 
 		QuotesRequestListener(ListView v) {
@@ -255,13 +256,13 @@ public class DisplayActivity extends BaseActivity {
 		}
 
 		@Override
-		public void onRequestFailure(SpiceException spiceException) {
+		public void onFailure(Throwable e, String response) {
 			Toast.makeText(DisplayActivity.this, "failure", Toast.LENGTH_SHORT)
 					.show();
 		}
 
 		@Override
-		public void onRequestSuccess(final String result) {
+		public void onSuccess(String result) {
 			final List<String> quotes = new ArrayList<String>();
 
 			String tab[] = result.split("<quote>");

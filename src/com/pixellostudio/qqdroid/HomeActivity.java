@@ -47,11 +47,11 @@ import android.widget.Toast;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.cleriotsimon.webtools.DBHandler;
+import com.cleriotsimon.webtools.WebRequest;
 import com.google.android.gcm.GCMRegistrar;
-import com.octo.android.robospice.persistence.DurationInMillis;
-import com.octo.android.robospice.persistence.exception.SpiceException;
-import com.octo.android.robospice.request.listener.RequestListener;
-import com.octo.android.robospice.request.simple.SimpleTextRequest;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.pixellostudio.qqdroid.R.drawable;
 
 /**
@@ -68,9 +68,6 @@ public class HomeActivity extends BaseActivity {
 
 	int nb = 0;
 
-	SimpleTextRequest websitesRequest;
-	SimpleTextRequest pushidRequest;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -82,11 +79,14 @@ public class HomeActivity extends BaseActivity {
 		if (regId.equals("")) {
 			GCMRegistrar.register(this, "913255144104");
 		} else {
-			Log.v(TAG, "Already registered");
-			pushidRequest = new SimpleTextRequest(
-					"http://qqdroid.mobi/api/register.php?gcm=" + regId);
-			getSpiceManager().execute(pushidRequest, "register_id",
-					DurationInMillis.NEVER, new PushidRequestListener());
+			Log.v(TAG, "Already registered : " + regId);
+			/*
+			 * pushidRequest = new SimpleTextRequest( );
+			 * getSpiceManager().execute(pushidRequest, "register_id",
+			 * DurationInMillis.NEVER, );
+			 */
+			WebRequest.get("http://qqdroid.mobi/api/register.php?gcm=" + regId,
+					WebRequest.NEVER, new PushidRequestListener());
 		}
 
 		items = new ArrayList<String>();
@@ -95,13 +95,13 @@ public class HomeActivity extends BaseActivity {
 		icons = new ArrayList<Integer>();
 		typesTitle = new ArrayList<Boolean>();
 
-		websitesRequest = new SimpleTextRequest(
-				"http://qqdroid.mobi/api/websites.json");
-
 		SharedPreferences settings = PreferenceManager
 				.getDefaultSharedPreferences(this);
 		if (settings.getBoolean("clear", false)) {
-			getSpiceManager().removeAllDataFromCache();
+			Log.d("QQDROID", "REMOVE DATA FROM CACHE");
+			DBHandler db = new DBHandler(this);
+			db.removeCache();
+
 			settings.edit().putBoolean("clear", false).commit();
 		}
 	}
@@ -111,8 +111,9 @@ public class HomeActivity extends BaseActivity {
 		super.onStart();
 
 		setSupportProgressBarIndeterminateVisibility(Boolean.TRUE);
-		getSpiceManager().execute(websitesRequest, "list_websites",
-				2 * DurationInMillis.ONE_WEEK, new WebsitesRequestListener()); // TODO
+
+		WebRequest.get("http://qqdroid.mobi/api/websites.json",
+				WebRequest.ONE_WEEK, new WebsitesRequestListener());
 	}
 
 	@Override
@@ -142,16 +143,18 @@ public class HomeActivity extends BaseActivity {
 		return false;
 	}
 
-	public class WebsitesRequestListener implements RequestListener<String> {
+	public class WebsitesRequestListener extends AsyncHttpResponseHandler {
 
 		@Override
-		public void onRequestFailure(SpiceException spiceException) {
+		public void onFailure(Throwable e, String response) {
 			Toast.makeText(HomeActivity.this, "failure", Toast.LENGTH_SHORT)
 					.show();
 		}
 
 		@Override
-		public void onRequestSuccess(final String result) {
+		public void onSuccess(String result) {
+			Log.d("QQDROID", "Success 2");
+
 			items.clear();
 			typesTitle.clear();
 			icons.clear();
@@ -290,17 +293,11 @@ public class HomeActivity extends BaseActivity {
 		}
 	}
 
-	public class PushidRequestListener implements RequestListener<String> {
-
+	public class PushidRequestListener extends JsonHttpResponseHandler {
 		@Override
-		public void onRequestFailure(SpiceException spiceException) {
+		public void onFailure(Throwable e, String response) {
 			Toast.makeText(HomeActivity.this, "failure", Toast.LENGTH_SHORT)
 					.show();
-		}
-
-		@Override
-		public void onRequestSuccess(final String result) {
-
 		}
 	}
 }

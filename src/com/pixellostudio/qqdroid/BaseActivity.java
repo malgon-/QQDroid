@@ -33,7 +33,6 @@ import android.view.View.OnClickListener;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
 import com.actionbarsherlock.view.Window;
-import com.octo.android.robospice.SpiceManager;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
@@ -45,7 +44,6 @@ import de.keyboardsurfer.android.widget.crouton.Style;
  */
 public class BaseActivity extends SherlockActivity {
 	protected String TAG = "QQDroid";
-	private SpiceManager spiceManager = new SpiceManager(RoboSpiceService.class);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,19 +56,20 @@ public class BaseActivity extends SherlockActivity {
 
 		getSupportActionBar().setLogo(R.drawable.home);
 
-		spiceManager.start(this);
+		// spiceManager.start(this);
 	}
 
 	@Override
 	protected void onStart() {
-		if (!spiceManager.isStarted())
-			spiceManager.start(this);
+		/*
+		 * if (!spiceManager.isStarted()) spiceManager.start(this);
+		 */
 		super.onStart();
 	}
 
 	@Override
 	protected void onStop() {
-		spiceManager.shouldStop();
+		// spiceManager.shouldStop();
 		super.onStop();
 	}
 
@@ -83,10 +82,6 @@ public class BaseActivity extends SherlockActivity {
 	protected void onDestroy() {
 		Crouton.cancelAllCroutons();
 		super.onDestroy();
-	}
-
-	protected SpiceManager getSpiceManager() {
-		return spiceManager;
 	}
 
 	@Override
